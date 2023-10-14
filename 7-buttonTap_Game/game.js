@@ -1,9 +1,31 @@
+var buttonColours = ["red", "blue", "green", "yellow"];
+
 var gamePattern = [];
 var userClickedPattern = [];
-var buttonColours = ["red", "blue", "green", "yellow"];
+
 var isStarted = 0;
 var level = 0;
 
+$(document).on("keydown", function(){
+    if(isStarted == 0){
+        $("h1").text("Level "+level);
+        nextSequence();
+        isStarted = 1;
+    }
+    
+});
+
+$(".btn").on("click",function(){
+    
+    
+    userClickedPattern.push(this.id);
+
+    playSound(this.id);
+    animatePress(this.id);
+
+    checkAnswer(userClickedPattern.length-1);
+    
+});
 
 function checkAnswer(currentLevel){
     
@@ -12,7 +34,7 @@ function checkAnswer(currentLevel){
 
         if (userClickedPattern.length === gamePattern.length){
 
-            //5. Call nextSequence() after a 1000 millisecond delay.
+            //Call nextSequence() after a 1000 millisecond delay.
             setTimeout(function () {
               nextSequence();
             }, 1000);
@@ -20,14 +42,23 @@ function checkAnswer(currentLevel){
           }
     }
     else{
+        playSound("wrong");
         console.log("wrong");
+
+        
+        $("body").addClass("game-over");
+        setTimeout(function () {
+            $("body").removeClass("game-over");
+          }, 200);
+          
+        $("h1").text("Game Over, Press Any Key to Restart");  
+        startOver();
     }
 }
 
 function nextSequence(){
 
     userClickedPattern = [];
-
 
     level++;
     $("h1").text("Level "+level);
@@ -43,26 +74,6 @@ function nextSequence(){
      
 }
 
-$(document).on("keydown", function(){
-    if(isStarted == 0){
-        $("h1").text("Level "+level);
-        nextSequence();
-        isStarted = 1;
-    }
-    
-})
-
-
-$(".btn").on("click",function(){
-    
-    animatePress(this.id);
-    userClickedPattern.push(this.id);
-
-    playSound(this.id);
-    checkAnswer(userClickedPattern.length-1);
-    
-});
-
 function playSound(randomChosenColour){
     var audio = new Audio('sounds/'+randomChosenColour+'.mp3');
     audio.play();
@@ -77,6 +88,21 @@ function animatePress(currentColour){
       }, 100);
     
 }
+
+function startOver(){
+    level = 0;
+    gamePattern = [];
+    isStarted = 0;
+}
+
+
+
+
+
+
+
+
+
 
 
 // //////////////////////////////////////////////////////////////////////
