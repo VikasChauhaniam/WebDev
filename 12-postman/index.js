@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-const port = 3000;
+const port = 3003;
 
 // *********************
 // Let’s practice using Postman. Make sure your server is running with nodemon.
