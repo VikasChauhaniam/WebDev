@@ -1,6 +1,10 @@
 import express from 'express';
 const app = express();
-const port = 3000;
+const port = 3002;
+
+app.get("/", (req, res)=>{
+    res.send("Hello vikas");
+});
 
 //3000 is port number
 app.listen(port, ()=>{
