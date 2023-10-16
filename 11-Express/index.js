@@ -3,7 +3,8 @@ const app = express();
 const port = 3002;
 
 app.get("/", (req, res)=>{
-    res.send("Hello vikas");
+    console.log(req.rawHeaders);
+    res.send("<h1>chalbe</h1>");
 });
 
 //3000 is port number
